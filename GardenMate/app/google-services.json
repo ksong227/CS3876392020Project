@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "514006117619",
+    "firebase_url": "https://gardenmate-b4eb8.firebaseio.com",
+    "project_id": "gardenmate-b4eb8",
+    "storage_bucket": "gardenmate-b4eb8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514006117619:android:354dac8e43d755a0a4db86",
+        "android_client_info": {
+          "package_name": "com.example.gardenmate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514006117619-hrpub8hg1moqh3ncl6l07a8j4nie4adm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gardenmate",
+            "certificate_hash": "b7d923c61d8b06c3e69be0c1787b4c581ed93ed6"
+          }
+        },
+        {
+          "client_id": "514006117619-4s82ocfrku6o5i49qgelboriajd689nj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi8NH0gS9izZCvxQBymj_Z_VcMnHwQtY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514006117619-4s82ocfrku6o5i49qgelboriajd689nj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
