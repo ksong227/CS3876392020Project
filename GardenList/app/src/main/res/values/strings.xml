@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">GardenList</string>
+    <string name="title_log_in">Log In</string>
+    <string name="login_email">Email:</string>
+    <string name="login_password">Password:</string>
+    <string name="btn_login">Log In</string>
+    <string name="sign_up_here">No Account? Sign Up Here!</string>
+
+    <string name="title_register">Register Account</string>
+    <string name="reg_email">Email:</string>
+    <string name="reg_password">Password: (Length 6+)</string>
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="log_in_here">Already have An Account? Log In Here!</string>
+
+</resources>
