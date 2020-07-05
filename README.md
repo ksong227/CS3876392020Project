@@ -1,1 +1,1 @@
-# CS3876392020Project
+# GardenMate
