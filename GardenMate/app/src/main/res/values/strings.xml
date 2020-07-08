@@ -11,5 +11,7 @@
     <string name="reg_password">Password: (Length 6+)</string>
     <string name="btn_sign_up">Sign Up</string>
     <string name="log_in_here">Already have An Account? Log In Here!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
