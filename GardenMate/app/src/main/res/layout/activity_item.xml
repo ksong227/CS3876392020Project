@@ -4,7 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16sp"
     tools:context=".ItemActivity">
+
+    <TextView
+        android:id="@+id/text_view_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="placeholder"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textSize="24sp"
+        android:textStyle="bold"/>
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/item_image_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_above="@+id/button_search"-->
+<!--        android:layout_below="@+id/text_view_item_name"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:scaleType="fitCenter" />-->
+
+    <TextView
+        android:id="@+id/text_view_json"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="77dp"
+        android:gravity="center"
+        android:text="placeholder"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/button_search"
@@ -13,6 +46,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
+        app:backgroundTint="?attr/colorPrimaryDark"
         android:text="Search" />
 
 </RelativeLayout>

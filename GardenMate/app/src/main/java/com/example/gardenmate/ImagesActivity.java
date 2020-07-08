@@ -3,7 +3,6 @@ package com.example.gardenmate;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -13,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +37,8 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
     private ProgressBar mProgressCircle;
 
+    private ExtendedFloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mProgressCircle = findViewById(R.id.progress_circle);
+        fab = findViewById(R.id.fab_upload);
 
         mUploads = new ArrayList<>();
 
@@ -82,15 +85,23 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
         });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openUploadActivity();
+            }
+        });
     }
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
 
         Upload selectedItem = mUploads.get(position);
         String selectedName = selectedItem.getName();
-        openItemActivity(selectedName);
+        String selectedUrl = selectedItem.getImageUrl();
+        openItemActivity(selectedName, selectedUrl);
     }
 
     @Override
@@ -115,10 +126,17 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         mDatabaseRef.removeEventListener(mDBListener);
     }
 
-    private void openItemActivity(String selectedName)
+    private void openItemActivity(String selectedName, String selectedUrl)
     {
         Intent intent = new Intent(this, ItemActivity.class);
         intent.putExtra("name", selectedName);
+        intent.putExtra("url", selectedUrl);
+        startActivity(intent);
+    }
+
+    private void openUploadActivity()
+    {
+        Intent intent = new Intent(this, UploadActivity.class);
         startActivity(intent);
     }
 }
