@@ -1,52 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16sp"
     tools:context=".ItemActivity">
 
-    <TextView
-        android:id="@+id/text_view_item_name"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="placeholder"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:textSize="24sp"
-        android:textStyle="bold"/>
+        android:layout_height="match_parent">
 
-    <!--    <ImageView-->
-<!--        android:id="@+id/item_image_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_above="@+id/button_search"-->
-<!--        android:layout_below="@+id/text_view_item_name"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:scaleType="fitCenter" />-->
+        <TextView
+            android:id="@+id/text_view_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16sp"
+            android:gravity="center"
+            android:text="placeholder"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/text_view_json"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="77dp"
-        android:gravity="center"
-        android:text="placeholder"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/item_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/text_view_item_name"
+            android:layout_margin="16sp"
+            android:scaleType="fitCenter" />
 
-    <Button
-        android:id="@+id/button_search"
+    </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_parseF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        app:backgroundTint="?attr/colorPrimaryDark"
-        android:text="Search" />
+        android:layout_gravity="top|start"
+        android:layout_marginBottom="70dp"
+        android:layout_marginStart="16sp"
+        android:text="Identify"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:theme="@style/AppTheme"
+        app:backgroundTint="?attr/colorAccent"
+        app:icon="@drawable/ic_flower"
+        app:layout_anchor="@id/fab_parseL"
+        app:layout_anchorGravity="top" />
 
-</RelativeLayout>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_parseL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16sp"
+        android:layout_gravity="bottom|start"
+        android:text="Identify"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:theme="@style/AppTheme"
+        app:backgroundTint="?attr/colorAccent"
+        app:icon="@drawable/ic_leaf" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -25,6 +25,9 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -49,10 +52,20 @@ public class UploadActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
 
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //getUId
+        if (user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+                uid = profile.getUid().replace("@","").replace(".","");
+            }
+        }
 
         mButtonChooseImage = findViewById(R.id.button_choose_image);
         mButtonUpload = findViewById(R.id.button_upload);
@@ -60,8 +73,8 @@ public class UploadActivity extends AppCompatActivity {
         mEditTextFileName = findViewById(R.id.edit_text_file_name);
         mImageView = findViewById(R.id.image_view);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mStorageRef = FirebaseStorage.getInstance().getReference(uid);
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(uid);
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +87,6 @@ public class UploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 uploadFile();
-                openImagesActivity();
             }
         });
 
@@ -132,7 +144,8 @@ public class UploadActivity extends AppCompatActivity {
                             if (task.isSuccessful()) { Uri downloadUri = task.getResult();
                                 Upload upload = new Upload(mEditTextFileName.getText().toString().trim(), downloadUri.toString());
                                 mDatabaseRef.push().setValue(upload);
-                                Toast.makeText(UploadActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(UploadActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
+                                openImagesActivity();
                             }
                             else { Toast.makeText(UploadActivity.this, "Upload failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
@@ -145,7 +158,7 @@ public class UploadActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Toast.makeText(this, "No file selected", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
     }
 

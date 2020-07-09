@@ -2,6 +2,12 @@ package com.example.gardenmate;
 
 import android.os.AsyncTask;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,21 +21,27 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class parseJSON extends AsyncTask <Void, Void, Void> {
+class parseJSON extends AsyncTask<String, Void, String> {
     String data = "";
-    String name = "";
+    String name;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference mDatabaseRef = database.getReference();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String uid;
+
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected String doInBackground(String... strings) {
 
         try {
-            URL url = new URL("https://my-api.plantnet.org/v2/identify/all?api-key=2a10vAmLauo1W9nGfh8EHZbye&images=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fgardenmate-b4eb8.appspot.com%2Fo%2Fuploads%252F1593892581561.jpg%3Falt%3Dmedia%26token%3D2e2074c8-9cfc-446d-99b8-ea2ced79b8b9&organs=flower");
+            URL url = new URL(strings[0]);
 
             HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
             InputStream inputStream = httpsURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-            //read file
+            //read
             String line = "";
             while(line != null)
             {
@@ -37,12 +49,12 @@ public class parseJSON extends AsyncTask <Void, Void, Void> {
                 data += line;
             }
 
-            //parse and get name
+            //parse
             JSONObject jo = new JSONObject(data);
-             JSONArray resultsArr = jo.getJSONArray("results");
-               JSONObject result0 = (JSONObject) resultsArr.get(0);
-                JSONObject species = result0.getJSONObject("species");
-                  name = species.getString("scientificNameWithoutAuthor");
+            JSONArray resultsArr = jo.getJSONArray("results");
+            JSONObject result0 = (JSONObject) resultsArr.get(0);
+            JSONObject species = result0.getJSONObject("species");
+            name = species.getString("scientificNameWithoutAuthor");
 
 
         } catch (MalformedURLException e) {
@@ -53,13 +65,26 @@ public class parseJSON extends AsyncTask <Void, Void, Void> {
             e.printStackTrace();
         }
 
-        return null;
+        return name;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
+    protected void onPostExecute(String string) {
+        super.onPostExecute(string);
 
-        ItemActivity.jsonText.setText(this.name);
+        //getUId and key
+        if (user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+                uid = profile.getUid().replace("@","").replace(".","");
+            }
+        }
+        String key = ItemActivity.item.getKey();
+
+        //set
+        ItemActivity.name = string;
+        ItemActivity.title.setText(name);
+
+        //update db
+        mDatabaseRef.child(uid).child(key).child("name").setValue(name);
     }
 }

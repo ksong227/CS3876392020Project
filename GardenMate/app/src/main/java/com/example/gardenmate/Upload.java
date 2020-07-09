@@ -2,7 +2,9 @@ package com.example.gardenmate;
 
 import com.google.firebase.database.Exclude;
 
-public class Upload {
+import java.io.Serializable;
+
+public class Upload implements Serializable {
     private String mName;
     private String mImageUrl;
     private String mKey;

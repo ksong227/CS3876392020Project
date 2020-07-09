@@ -7,12 +7,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +37,9 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     private DatabaseReference mDatabaseRef;
     private ValueEventListener mDBListener;
 
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String uid;
+
     private List<Upload> mUploads;
 
     private ProgressBar mProgressCircle;
@@ -43,6 +50,13 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_images);
+
+        //getUId
+        if (user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+                uid = profile.getUid().replace("@","").replace(".","");
+            }
+        }
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -59,7 +73,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
         mStorage = FirebaseStorage.getInstance();
 
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(uid);
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -99,9 +113,9 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         //Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
 
         Upload selectedItem = mUploads.get(position);
-        String selectedName = selectedItem.getName();
-        String selectedUrl = selectedItem.getImageUrl();
-        openItemActivity(selectedName, selectedUrl);
+
+        openDetailsActivity();
+        //openItemActivity(selectedItem);
     }
 
     @Override
@@ -126,11 +140,16 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         mDatabaseRef.removeEventListener(mDBListener);
     }
 
-    private void openItemActivity(String selectedName, String selectedUrl)
+    private void openDetailsActivity()
+    {
+        Intent intent = new Intent(this, DetailsActivity.class);
+        startActivity(intent);
+    }
+
+    private void openItemActivity(Upload selectedItem)
     {
         Intent intent = new Intent(this, ItemActivity.class);
-        intent.putExtra("name", selectedName);
-        intent.putExtra("url", selectedUrl);
+        intent.putExtra("item", selectedItem);
         startActivity(intent);
     }
 
