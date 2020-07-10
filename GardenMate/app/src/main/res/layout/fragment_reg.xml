@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E4FFC5"
+    android:background="@android:color/transparent"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -54,6 +54,7 @@
                 android:paddingStart="40dp"
                 android:paddingEnd="40dp"
                 android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:text="@string/btn_sign_up" />
 
             <TextView

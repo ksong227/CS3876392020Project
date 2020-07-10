@@ -5,9 +5,12 @@ import com.google.firebase.database.Exclude;
 import java.io.Serializable;
 
 public class Upload implements Serializable {
+
+    private String mKey;
     private String mName;
     private String mImageUrl;
-    private String mKey;
+    private String mNotes;
+    private Boolean mIdentified;
 
     public Upload(){}
 
@@ -15,10 +18,12 @@ public class Upload implements Serializable {
     {
         if(name.trim().equals(""))
         {
-            name = "Unnamed";
+            name = "Unknown";
         }
         mName = name;
         mImageUrl = imageUrl;
+        mNotes = "";
+        mIdentified = false;
     }
 
     public String getName() {
@@ -35,6 +40,22 @@ public class Upload implements Serializable {
 
     public void setImageUrl(String mImageUrl) {
         this.mImageUrl = mImageUrl;
+    }
+
+    public String getNotes() {
+        return mNotes;
+    }
+
+    public void setNotes(String mNotes) {
+        this.mNotes = mNotes;
+    }
+
+    public Boolean getIdentified() {
+        return mIdentified;
+    }
+
+    public void setIdentified(Boolean mIdentified) {
+        this.mIdentified = mIdentified;
     }
 
     @Exclude

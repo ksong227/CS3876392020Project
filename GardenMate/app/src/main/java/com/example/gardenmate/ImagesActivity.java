@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,8 +43,8 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
     private List<Upload> mUploads;
 
+    private MaterialToolbar toolbar;
     private ProgressBar mProgressCircle;
-
     private ExtendedFloatingActionButton fab;
 
     @Override
@@ -62,6 +63,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        toolbar = findViewById(R.id.toolbar);
         mProgressCircle = findViewById(R.id.progress_circle);
         fab = findViewById(R.id.fab_upload);
 
@@ -74,6 +76,9 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         mStorage = FirebaseStorage.getInstance();
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference(uid);
+
+        setSupportActionBar(toolbar);
+
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -114,7 +119,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
         Upload selectedItem = mUploads.get(position);
 
-        openDetailsActivity();
+        openDetailsActivity(selectedItem);
         //openItemActivity(selectedItem);
     }
 
@@ -140,15 +145,9 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         mDatabaseRef.removeEventListener(mDBListener);
     }
 
-    private void openDetailsActivity()
+    private void openDetailsActivity(Upload selectedItem)
     {
         Intent intent = new Intent(this, DetailsActivity.class);
-        startActivity(intent);
-    }
-
-    private void openItemActivity(Upload selectedItem)
-    {
-        Intent intent = new Intent(this, ItemActivity.class);
         intent.putExtra("item", selectedItem);
         startActivity(intent);
     }

@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TableLayout;
 
@@ -20,20 +21,28 @@ import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
+    FragmentPagerAdapter adapterViewPager;
+
     private Tab1Fragment tab1Fragment;
     private Tab2Fragment tab2Fragment;
+
+    public static Upload item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //get object
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            item  = (Upload) getIntent().getSerializableExtra("item");
+        }
+
+        //Log.i("TAG", "DEBUG ACT NAME: "+item.getName());
 
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
@@ -43,14 +52,68 @@ public class DetailsActivity extends AppCompatActivity {
 
         tabLayout.setupWithViewPager(viewPager);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
-        viewPagerAdapter.addFragment(tab1Fragment, "Details");
-        viewPagerAdapter.addFragment(tab2Fragment, "Wiki");
-        viewPager.setAdapter(viewPagerAdapter);
+        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapterViewPager);
 
     }
 
-    private class ViewPagerAdapter extends FragmentPagerAdapter
+    public static class MyPagerAdapter extends FragmentPagerAdapter
+    {
+        private static int NUM_ITEMS = 3;
+
+        public MyPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        // Returns total number of pages
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+        // Returns the fragment to display for that page
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return Tab1Fragment.newInstance(item);
+                case 1:
+                    return Tab2Fragment.newInstance(item);
+                case 2:
+                    return Tab3Fragment.newInstance(item);
+                default:
+                    return null;
+            }
+        }
+
+        // Returns the page title for the top indicator
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Details";
+                case 1:
+                    return "Wiki";
+                case 2:
+                    return "Notes";
+                default:
+                    return null;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+        private class ViewPagerAdapter extends FragmentPagerAdapter
     {
         private List<Fragment> fragments = new ArrayList<>();
         private List<String> fragmentTitle = new ArrayList<>();

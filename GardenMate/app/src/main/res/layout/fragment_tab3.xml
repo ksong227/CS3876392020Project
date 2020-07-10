@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".Tab3Fragment">
+
+    <TextView
+        android:id="@+id/text_view_notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="24dp"
+        android:text="Notes:"/>
+
+    <EditText
+        android:id="@+id/edit_text_notes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="64dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="bottom|end"
+        android:text="Save"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:theme="@style/AppTheme"
+        app:backgroundTint="?attr/colorAccent"
+        app:icon="@drawable/ic_save" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

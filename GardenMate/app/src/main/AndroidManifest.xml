@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".DetailsActivity"></activity>
-        <activity android:name=".ItemActivity" />
         <activity android:name=".ImagesActivity" />
         <activity android:name=".UploadActivity" />
         <activity android:name=".MainActivity">

@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".Tab2Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/text_view_warning"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="Please Identify The Plant First"
+        app:layout_anchor="@+id/web_view"
+        android:visibility="visible"
+        android:background="#EF5350"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#ffffff"
+        android:padding="16dp"
+        android:textAlignment="center"
+        app:layout_anchorGravity="top|center" />
 
-</FrameLayout>
+    <WebView
+        android:id="@+id/web_view"
+        android:padding="16dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone"
+        android:text="Garden.org"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        android:theme="@style/AppTheme"
+        app:backgroundTint="?attr/colorAccent"
+        app:icon="@drawable/ic_open" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
